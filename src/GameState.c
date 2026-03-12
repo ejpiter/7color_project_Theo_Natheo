@@ -47,6 +47,27 @@ void fill_map(GameState* state){ // J'ai renommé 'map' en 'state' pour que ce s
     set_map_value(state, state->size - 1, 0, PLAYER_2); // Player2: x=size-1, y=0
 }
 
+// Question 2 : Fonction d'affichage avec des lettres 
+void GR11_afficher(GameState* state) {
+    printf("\n--- ETAT DU TERRITOIRE ---\n");
+    for (int y = 0; y < state->size; y++) {
+        for (int x = 0; x < state->size; x++) {
+            Color c = get_map_value(state, x, y);
+            
+            if (c == PLAYER_1) {
+                printf("1 "); // Joueur 1 [cite: 149]
+            } else if (c == PLAYER_2) {
+                printf("2 "); // Joueur 2 [cite: 149]
+            } else {
+                // Les couleurs vont de RED (0 dans notre décalage) à WHITE (6)
+                // 'A' + 0 = 'A', 'A' + 1 = 'B', etc.
+                printf("%c ", 'A' + (c - RED)); 
+            }
+        }
+        printf("\n"); // Retour à la ligne à la fin de chaque ligne de la grille
+    }
+    printf("--------------------------\n");
+}
 
 int main(int argc, char** argv){
     // Convertit l'argument texte en entier
@@ -55,6 +76,9 @@ int main(int argc, char** argv){
     // On initialise notre variable globale 'state'
     create_empty_game_state(&state, size);
     fill_map(&state);
+
+    //On appelle la fonction d'affichage
+    GR11_afficher(&state);
 
     // On libère la mémoire à la fin
     free(state.map);
